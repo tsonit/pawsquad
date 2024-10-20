@@ -48,8 +48,11 @@
                 <li class="menu-item-has-children {{ request()->routeIs('service') ? 'active' : '' }}">
                     <a href="#">Dịch vụ</a><i class="bi bi-plus dropdown-icon"></i>
                     <ul class="sub-menu">
-                        <li><a href="{{ route('service', ['slug' => 'dv-a']) }}">DV A </a></li>
-                        <li><a href="service-details.html">DV B</a></li>
+                        @if (getService() && getService()->isNotEmpty())
+                            @foreach (getService() as $service)
+                                <li><a href="{{ route('service', ['slug' => $service->slug]) }}">{{ $service->name }}</a></li>
+                            @endforeach
+                        @endif
                     </ul>
                 </li>
                 <li class="{{ request()->routeIs('product') ? 'active' : '' }}">
@@ -110,7 +113,8 @@
                         </svg>
                     </a>
                     <form class="nav__search-form" action="{{ route('product') }}" method="GET">
-                        <input type="text" name="search"  placeholder="Nhập nội dung tìm kiếm" id="search" autocomplete="off">
+                        <input type="text" name="search" placeholder="Nhập nội dung tìm kiếm" id="search"
+                            autocomplete="off">
                         <button type="submit">
                             <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                                 <path

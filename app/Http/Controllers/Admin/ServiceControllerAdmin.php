@@ -85,7 +85,8 @@ class ServiceControllerAdmin extends Controller
                 return redirect(route('admin.services.addService'))->withErrorMessage('Vui lòng upload hình ảnh!');
             }
             try {
-                $addServie = Service::create([
+
+                $addService = Service::create([
                     'image' => $avatar,
                     'name' => $request->input('name'),
                     'slug' => $slug,
@@ -93,6 +94,7 @@ class ServiceControllerAdmin extends Controller
                     'short_description' => $request->input('short_description'),
                     'meta_title' => $request->input('meta_title') ?? NULL,
                     'meta_description' => $request->input('meta_description') ?? NULL,
+                    'html_content' => contentDefaultService(),
                 ]);
                 return redirect(route('admin.services.index'))->withSuccessMessage('Thêm dịch vụ thành công!');
             } catch (\Exception $e) {
