@@ -346,7 +346,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
+
+    @if (in_array(Route::currentRouteName(), ['home', 'service']))
+        {!! JsValidator::formRequest('App\Http\Requests\BookingFormRequest', '#booking') !!}
+    @endif
+
     <script>
         function notifyMe(level, message) {
             if (level == 'danger') {
@@ -379,6 +383,26 @@
                 notifyMe("{{ $message['level'] }}", "{{ $message['message'] }}");
             @endforeach
             {{ session()->forget('flash_notification') }}
+        @endif
+
+        @if (session('success_message'))
+            notifyMe("success", @json(session('success_message')));
+        @endif
+
+        @if (session('error_message'))
+            @php
+                $errors = session('error_message');
+            @endphp
+
+            @if ($errors instanceof \Illuminate\Support\MessageBag)
+                @foreach ($errors->all() as $error)
+                    notifyMe("error", @json($error));
+                @endforeach
+            @elseif (is_string($errors))
+                notifyMe("error", @json($errors));
+            @else
+                notifyMe("error", @json(var_export($errors, true)));
+            @endif
         @endif
     </script>
     @yield('js')

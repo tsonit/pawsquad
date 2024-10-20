@@ -94,7 +94,7 @@ class ProductController extends Controller
     {
         $product = Product::with('category')->isActive()->where('slug', $request->slug)->first();
         if (!$product) {
-            return redirect()->route('product')->withErrorMessage('Không tìm sản phẩm!');
+            return redirect()->route('product')->withErrorMessage('Không tìm thấy sản phẩm!');
         }
         $mergedList = mergeImageWithList($product->image, $product->image_list);
         if ($product) {

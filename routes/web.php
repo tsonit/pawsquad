@@ -62,6 +62,7 @@ Route::middleware(['checkaccount'])->group(function () {
     Route::get('/gioi-thieu', [AboutController::class, 'index'])->name('about');
 
     Route::get('/dich-vu/{slug}', [ServiceController::class, 'index'])->name('service');
+    Route::post('/gui-dich-vu', [ServiceController::class, 'post'])->name('postService');
 
     Route::get('/san-pham', [ProductController::class, 'all'])->name('product');
     Route::get('/san-pham/{slug}', [ProductController::class, 'detail'])->where('slug', '^(?!loc$).*')->name('product.detail');

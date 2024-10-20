@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('phone', 20);
             $table->string('email', 50);
             $table->string('message',500);
-            $table->integer('status');
-            $table->integer('type')->default(1);
+            $table->integer('status')->default(0);
+            $table->bigInteger('service_id');
             $table->datetime('scheduled_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

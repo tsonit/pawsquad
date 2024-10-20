@@ -2,7 +2,7 @@
     <div class="section-title">
         <h2>Đặt lịch</h2>
     </div>
-    <form id="booking" method="POST" action="">
+    <form id="booking" method="POST" action="{{ route('postService') }}">
         <div class="row">
             <div class="col-lg-6">
                 <div class="form-inner">
@@ -44,6 +44,7 @@
             </div>
             <div class="col-lg-12">
                 <div class="form-inner">
+                    @csrf
                     <button class="primary-btn3" type="submit">Đặt lịch ngay</button>
                 </div>
             </div>
