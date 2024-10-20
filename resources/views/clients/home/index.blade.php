@@ -117,17 +117,20 @@
                                 @foreach ($categories as $category)
                                     <div class="swiper-slide">
                                         <div class="category-card">
-                                            <a href="{{ route('list.category', ['slug' => $category->slug]) }}" class="category-card-inner">
+                                            <a href="{{ route('list.category', ['slug' => $category->slug]) }}"
+                                                class="category-card-inner">
                                                 <div class="category-card-front">
                                                     <div class="category-icon">
-                                                        <img src="{{ getImage($category->image) }}" alt="{{ $category->name }}">
+                                                        <img src="{{ getImage($category->image) }}"
+                                                            alt="{{ $category->name }}">
                                                     </div>
                                                     <div class="content">
                                                         <h4>{{ $category->name }}</h4>
                                                     </div>
                                                 </div>
                                                 <div class="category-card-back">
-                                                    <img src="{{ getImage($category->image) }}" alt="{{ $category->name }}">
+                                                    <img src="{{ getImage($category->image) }}"
+                                                        alt="{{ $category->name }}">
                                                 </div>
                                             </a>
                                         </div>
@@ -329,56 +332,7 @@
             <div class="col-lg-10">
                 <div class="row">
                     <div class="col-lg-8 ">
-                        <div class="contact-wrap mx-2">
-                            <div class="section-title">
-                                <h2>Đặt lịch</h2>
-                            </div>
-                            <form>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-inner">
-                                            <input type="text" placeholder="Tên của bạn" name="name">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-inner">
-                                            <input type="text" placeholder="Số điện thoại" name="phone">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-inner">
-                                            <input type="email" placeholder="Địa chỉ email" name="email">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-inner date">
-                                            <input autocomplete="off" type="text" id="datepicker3"
-                                                placeholder="Chọn thời gian">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 mb-4">
-                                        <div class="form-inner service">
-                                            <select id="duration2" name="service" class="w-100">
-                                                <option value="" selected disabled>Chọn dịch vụ</option>
-                                                <option value="luu_tru">Lưu trữ</option>
-                                                <option value="cat_tia">Cắt tỉa</option>
-                                                <option value="grooming">Grooming</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="form-inner">
-                                            <textarea placeholder="Nội dung" name="content"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="form-inner">
-                                            <button class="primary-btn3" type="submit">Đặt lịch ngay</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                        @include('clients.partials.booking')
                     </div>
                     <div class="col-lg-4 d-md-block d-none">
                         <div class="contact-img mt-5">

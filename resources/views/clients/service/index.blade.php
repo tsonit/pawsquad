@@ -22,4 +22,9 @@
             {!! $content !!}
         </div>
     </div>
+    <div class="h2-contact-area row justify-content-center">
+        <div class="container">
+            @include('clients.partials.booking')
+        </div>
+    </div>
 @endsection
