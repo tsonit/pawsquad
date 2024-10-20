@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Service;
 use App\Models\Variations;
 use App\Models\VariationValues;
 use App\Models\Voucher;
@@ -138,6 +139,16 @@ function generateSlug($string, $type, $id = null)
             break;
         case 'product':
             while (Product::select('slug')
+                ->where('slug', $slug)
+                ->where('id', '!=', $id)
+                ->exists()
+            ) {
+                $slug = $slug . '-' . $count;
+                $count++;
+            }
+            break;
+        case 'service':
+            while (Service::select('slug')
                 ->where('slug', $slug)
                 ->where('id', '!=', $id)
                 ->exists()
@@ -476,7 +487,7 @@ function getOrder($type, $user_id = NULL)
     switch ($type) {
         case 'PAID':
             $orders = Order::where('order_status', 'PAID')
-            ->where('shipment_status', 'DELIVERED');
+                ->where('shipment_status', 'DELIVERED');
             break;
 
         case 'CANCELED':
@@ -485,10 +496,10 @@ function getOrder($type, $user_id = NULL)
 
         case 'PENDING':
             $orders = Order::where('order_status', 'PENDING')
-            ->orWhere(function($query) {
-                $query->where('order_status', 'PAID')
-                      ->where('shipment_status', '!=', 'DELIVERED');
-            });
+                ->orWhere(function ($query) {
+                    $query->where('order_status', 'PAID')
+                        ->where('shipment_status', '!=', 'DELIVERED');
+                });
             break;
         case 'ALL':
             $orders = Order::all();

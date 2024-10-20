@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryControllerAdmin;
 use App\Http\Controllers\Admin\EmailControllerAdmin;
 use App\Http\Controllers\Admin\HomeControllerAdmin;
 use App\Http\Controllers\Admin\ProductControllerAdmin;
+use App\Http\Controllers\Admin\ServiceControllerAdmin;
 use App\Http\Controllers\Admin\UploadControllerAdmin;
 use App\Http\Controllers\Admin\VariationsControllerAdmin;
 use App\Http\Controllers\Admin\VariationValuesControllerAdmin;
@@ -245,6 +246,22 @@ Route::middleware(['checkaccount'])->group(function () {
                     Route::get('edit/{id?}', [EmailControllerAdmin::class, 'edit'])->name('editEmail')->where(['id' => '[0-9]+']);
                     Route::post('edit/{id?}', [EmailControllerAdmin::class, 'postEdit'])->name('postEditEmail');
                     Route::post('uploadAsset', [EmailControllerAdmin::class, 'uploadAsset'])->name('uploadAsset');
+                }
+            );
+            Route::middleware(['role:10'])->prefix('services')->name('services.')->group(
+                function () {
+                    Route::match(['get', 'post'], '/', [ServiceControllerAdmin::class, 'index'])->name('index');
+                    Route::get('edit/{id?}', [ServiceControllerAdmin::class, 'edit'])->name('editService')->where(['id' => '[0-9]+']);
+                    Route::put('edit/{id?}', [ServiceControllerAdmin::class, 'postEdit'])->name('postEditService');
+                    Route::get('editTheme/{id?}', [ServiceControllerAdmin::class, 'editTheme'])->name('editServiceTheme')->where(['id' => '[0-9]+']);
+                    Route::post('editTheme/{id?}', [ServiceControllerAdmin::class, 'postEditTheme'])->name('postEditServiceTheme');
+                    Route::get('getTheme/{id?}', [ServiceControllerAdmin::class, 'getTheme'])->name('getTheme')->where(['id' => '[0-9]+']);
+                    Route::post('uploadAsset', [ServiceControllerAdmin::class, 'uploadAsset'])->name('uploadAsset');
+                    Route::get('delete/{id?}', [ServiceControllerAdmin::class, 'delete'])->name('deleteService')->where(['id' => '[0-9]+']);
+                    Route::match(['get', 'post'], '/trashed', [ServiceControllerAdmin::class, 'trashed'])->name('trashed');
+                    Route::get('restore/{id?}', [ServiceControllerAdmin::class, 'restore'])->name('restoreService')->where(['id' => '[0-9]+']);
+                    Route::get('add', [ServiceControllerAdmin::class, 'add'])->name('addService');
+                    Route::post('add', [ServiceControllerAdmin::class, 'postAdd'])->name('postAddService');
                 }
             );
         });

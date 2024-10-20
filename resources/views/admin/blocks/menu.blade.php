@@ -103,6 +103,7 @@
                 </li>
             </ul>
         </li>
+
         <li class="menu-item {{ Route::is('admin.emails.index') ? 'active' : '' }}">
             <a href="{{ route('admin.emails.index') }}" class=" menu-link">
                 <i class="menu-icon tf-icons ti ti-mail"></i>
@@ -110,6 +111,12 @@
             </a>
         </li>
 
+        <li class="menu-item {{ Route::is('admin.services.index') ? 'active' : '' }}">
+            <a href="{{ route('admin.services.index') }}" class=" menu-link">
+                <i class="menu-icon tf-icons ti ti-package"></i>
+                <div>Dịch vụ</div>
+            </a>
+        </li>
 
     </ul>
 </aside>

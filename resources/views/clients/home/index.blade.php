@@ -331,7 +331,7 @@
                     <div class="col-lg-8 ">
                         <div class="contact-wrap mx-2">
                             <div class="section-title">
-                                <h2>Báo giá</h2>
+                                <h2>Đặt lịch</h2>
                             </div>
                             <form>
                                 <div class="row">
