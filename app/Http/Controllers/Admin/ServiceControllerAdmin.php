@@ -110,6 +110,9 @@ class ServiceControllerAdmin extends Controller
         if (!$data) {
             return redirect(route('admin.services.index'))->withErrorMessage('Không tìm thấy dịch vụ.');
         }
+        if ($data->id == Service::defaultService()->id) {
+            return redirect()->back()->withErrorMessage('Không thể sửa dịch vụ này.');
+        }
         request()->session()->put('service', [
             'id' => encrypt($id),
             'image' => encrypt($data->image),
@@ -123,6 +126,9 @@ class ServiceControllerAdmin extends Controller
         $data = Service::find($id);
         if (!$data) {
             return redirect(route('admin.services.index'))->withErrorMessage('Không tìm thấy dịch vụ.');
+        }
+        if ($data->id == Service::defaultService()->id) {
+            return redirect()->back()->withErrorMessage('Không thể sửa dịch vụ này.');
         }
         $uploadImage = session('uploadImages');
         $service = session('service.image');
@@ -168,6 +174,9 @@ class ServiceControllerAdmin extends Controller
         if ($service == NULL) {
             return redirect(route('admin.services.index'))->withErrorMessage('Không tìm thấy dịch vụ.');
         }
+        if ($service->id == Service::defaultService()->id) {
+            return redirect()->back()->withErrorMessage('Không thể xoá dịch vụ này.');
+        }
         if ($service->deleted_at) {
             if ($service->image) {
                 deleteImages($service->image);
@@ -185,6 +194,9 @@ class ServiceControllerAdmin extends Controller
         if (!$data) {
             return redirect(route('admin.services.index'))->withErrorMessage('Không tìm thấy dịch vụ.');
         }
+        if ($data->id == Service::defaultService()->id) {
+            return redirect()->back()->withErrorMessage('Không thể sửa dịch vụ này.');
+        }
         return view('admin.services.builder', compact('data'));
     }
 
@@ -195,6 +207,9 @@ class ServiceControllerAdmin extends Controller
             return response()->json([
                 'message' => "Không tìm thấy ID dịch vụ"
             ], 404);
+        }
+        if ($data->id == Service::defaultService()->id) {
+            return redirect()->back()->withErrorMessage('Không thể sửa dịch vụ này.');
         }
         $data->update([
             'html_content' => $request->input('content'),
@@ -208,6 +223,9 @@ class ServiceControllerAdmin extends Controller
         $data = Service::find($id);
         if (!$data) {
             return redirect(route('admin.services.index'))->withErrorMessage('Không tìm thấy dịch vụ.');
+        }
+        if ($data->id == Service::defaultService()->id) {
+            return redirect()->back()->withErrorMessage('Không thể xem dịch vụ này.');
         }
         return view('admin.services.theme', compact('data'));
     }
