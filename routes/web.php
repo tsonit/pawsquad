@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\EmailControllerAdmin;
 use App\Http\Controllers\Admin\HomeControllerAdmin;
 use App\Http\Controllers\Admin\ProductControllerAdmin;
 use App\Http\Controllers\Admin\ServiceControllerAdmin;
+use App\Http\Controllers\Admin\SliderControllerAdmin;
 use App\Http\Controllers\Admin\UploadControllerAdmin;
 use App\Http\Controllers\Admin\VariationsControllerAdmin;
 use App\Http\Controllers\Admin\VariationValuesControllerAdmin;
@@ -275,6 +276,16 @@ Route::middleware(['checkaccount'])->group(function () {
                     Route::match(['get', 'post'], '/trashed', [ContactControllerAdmin::class, 'trashed'])->name('trashed');
                     Route::get('restore/{id?}', [ContactControllerAdmin::class, 'restore'])->name('restoreBooking')->where(['id' => '[0-9]+']);
                     Route::post('info', [ContactControllerAdmin::class, 'showInfo'])->name('showInfoBooking');
+                }
+            );
+            Route::middleware(['role:10'])->prefix('sliders')->name('sliders.')->group(
+                function () {
+                    Route::match(['get', 'post'], '/', [SliderControllerAdmin::class, 'index'])->name('index');
+                    Route::get('add', [SliderControllerAdmin::class, 'add'])->name('addSliders');
+                    Route::post('add', [SliderControllerAdmin::class, 'postAdd'])->name('postAddSliders');
+                    Route::get('edit/{id?}', [SliderControllerAdmin::class, 'edit'])->name('editSliders')->where(['id' => '[0-9]+']);
+                    Route::put('edit/{id?}', [SliderControllerAdmin::class, 'postEdit'])->name('postEditSliders');
+                    Route::get('delete/{id?}', [SliderControllerAdmin::class, 'delete'])->name('deleteSliders')->where(['id' => '[0-9]+']);
                 }
             );
         });

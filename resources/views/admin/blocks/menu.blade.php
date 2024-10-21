@@ -104,23 +104,29 @@
             </ul>
         </li>
 
-        <li class="menu-item {{ Route::is('admin.emails.index') ? 'active' : '' }}">
+        <li class="menu-item {{ Route::is('admin.emails.*') ? 'active' : '' }}">
             <a href="{{ route('admin.emails.index') }}" class=" menu-link">
                 <i class="menu-icon tf-icons ti ti-mail"></i>
                 <div>Email</div>
             </a>
         </li>
 
-        <li class="menu-item {{ Route::is('admin.services.index') ? 'active' : '' }}">
+        <li class="menu-item {{ Route::is('admin.services.*') ? 'active' : '' }}">
             <a href="{{ route('admin.services.index') }}" class=" menu-link">
                 <i class="menu-icon tf-icons ti ti-package"></i>
                 <div>Dịch vụ</div>
             </a>
         </li>
-        <li class="menu-item {{ Route::is('admin.booking.index') ? 'active' : '' }}">
+        <li class="menu-item {{ Route::is('admin.booking.*') ? 'active' : '' }}">
             <a href="{{ route('admin.booking.index') }}" class=" menu-link">
                 <i class="menu-icon tf-icons ti ti-calendar"></i>
                 <div>Đặt lịch</div>
+            </a>
+        </li>
+        <li class="menu-item {{ Route::is('admin.sliders.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.sliders.index') }}" class=" menu-link">
+                <i class="menu-icon fa-brands fa-slideshare"></i>
+                <div>Slider</div>
             </a>
         </li>
 
