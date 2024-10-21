@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Attribute_SetControllerAdmin;
 use App\Http\Controllers\Admin\AttributesControllerAdmin;
 use App\Http\Controllers\Admin\BrandsControllerAdmin;
 use App\Http\Controllers\Admin\CategoryControllerAdmin;
+use App\Http\Controllers\Admin\ContactControllerAdmin;
 use App\Http\Controllers\Admin\EmailControllerAdmin;
 use App\Http\Controllers\Admin\HomeControllerAdmin;
 use App\Http\Controllers\Admin\ProductControllerAdmin;
@@ -263,6 +264,17 @@ Route::middleware(['checkaccount'])->group(function () {
                     Route::get('restore/{id?}', [ServiceControllerAdmin::class, 'restore'])->name('restoreService')->where(['id' => '[0-9]+']);
                     Route::get('add', [ServiceControllerAdmin::class, 'add'])->name('addService');
                     Route::post('add', [ServiceControllerAdmin::class, 'postAdd'])->name('postAddService');
+                }
+            );
+            Route::middleware(['role:10'])->prefix('booking')->name('booking.')->group(
+                function () {
+                    Route::match(['get', 'post'], '/', [ContactControllerAdmin::class, 'index'])->name('index');
+                    Route::get('edit/{id?}', [ContactControllerAdmin::class, 'edit'])->name('editBooking')->where(['id' => '[0-9]+']);
+                    Route::put('edit/{id?}', [ContactControllerAdmin::class, 'postEdit'])->name('postEditBooking');
+                    Route::get('delete/{id?}', [ContactControllerAdmin::class, 'delete'])->name('deleteBooking')->where(['id' => '[0-9]+']);
+                    Route::match(['get', 'post'], '/trashed', [ContactControllerAdmin::class, 'trashed'])->name('trashed');
+                    Route::get('restore/{id?}', [ContactControllerAdmin::class, 'restore'])->name('restoreBooking')->where(['id' => '[0-9]+']);
+                    Route::post('info', [ContactControllerAdmin::class, 'showInfo'])->name('showInfoBooking');
                 }
             );
         });

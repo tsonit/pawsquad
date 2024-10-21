@@ -18,6 +18,7 @@ class Contact extends Model
         'status',
         'service_id',
         'scheduled_at',
+        'note'
     ];
     public function service()
     {

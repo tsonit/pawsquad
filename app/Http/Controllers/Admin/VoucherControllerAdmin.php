@@ -74,6 +74,7 @@ class VoucherControllerAdmin extends Controller
                 //2024-10-01 đến 2024-10-31
                 // Phân tách chuỗi thành 2 ngày
                 $dates = explode(' đến ', $request->get('date_range'));
+                
                 if (count($dates) == 2) {
                     // Sử dụng Carbon để phân tích ngày tháng
                     $startDate = \Carbon\Carbon::createFromFormat('Y-m-d', trim($dates[0]))->startOfDay();

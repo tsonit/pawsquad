@@ -526,3 +526,25 @@ function contentDefaultService(){
     HTML;
     return $html;
 }
+function getStatusBooking($type)
+{
+    switch ($type) {
+        case 0:
+            return 'Đã tạo';
+        case 1:
+            return 'Đang xử lý';
+        case 2:
+            return 'Hoàn thành';
+        case 3:
+            return 'Đã hủy';
+        case 4:
+            return 'Tạm hoãn';
+        case 5:
+            return 'Đã xác nhận';
+        case 6:
+            return 'Không thành công';
+        default:
+            return 'N/A';
+    }
+}
+

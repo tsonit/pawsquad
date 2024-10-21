@@ -117,6 +117,12 @@
                 <div>Dịch vụ</div>
             </a>
         </li>
+        <li class="menu-item {{ Route::is('admin.booking.index') ? 'active' : '' }}">
+            <a href="{{ route('admin.booking.index') }}" class=" menu-link">
+                <i class="menu-icon tf-icons ti ti-calendar"></i>
+                <div>Đặt lịch</div>
+            </a>
+        </li>
 
     </ul>
 </aside>
