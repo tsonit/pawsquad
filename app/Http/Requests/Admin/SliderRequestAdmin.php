@@ -21,7 +21,7 @@ class SliderRequestAdmin extends FormRequest
             'button_text' => 'nullable|string|max:50',
             'status' => 'required|in:on,off',
             'button_link_text' => 'nullable|url',
-            'order' => 'nullable|integer|min:0',
+            'order' => 'required|integer|min:0',
         ];
     }
     public function messages()

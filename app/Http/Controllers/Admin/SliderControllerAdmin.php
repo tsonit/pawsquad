@@ -74,10 +74,12 @@ class SliderControllerAdmin extends Controller
                     'status' => $status,
                     'button_link_text' => $request->input('button_link_text'),
                     'button_text' => $request->input('button_text'),
+                    'price' => $request->input('price'),
                 ]);
 
                 return redirect(route('admin.sliders.index'))->withSuccessMessage('Thêm slider thành công!');
             } catch (\Exception $e) {
+                dd($e->getMessage());
                 return redirect(route('admin.sliders.addSliders'))->withErrorMessage('Đã xảy ra lỗi khi thêm slider.');
             }
         } else {
@@ -134,6 +136,7 @@ class SliderControllerAdmin extends Controller
                 'status' => $status,
                 'button_link_text' => $request->input('button_link_text'),
                 'button_text' => $request->input('button_text'),
+                'price' => $request->input('price'),
             ]);
             return redirect(route('admin.sliders.index'))->withSuccessMessage('Cập nhật slider thành công!');
         } catch (\Exception $e) {

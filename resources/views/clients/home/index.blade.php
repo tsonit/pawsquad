@@ -1,4 +1,14 @@
 @extends('layouts.clients')
+@section('css')
+    <style>
+        .hero3-slider .swiper-slide {
+            height: 500px;
+            display: flex;
+            align-items: center;
+            object-fit: cover;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="hero3 mb-90">
         <div class="background-text">
@@ -9,78 +19,100 @@
         </div>
         <div class="swiper hero3-slider">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="hero-wrapper">
-                        <div class="container">
-                            <div class="row align-items-center">
-                                <div class="col-lg-6">
-                                    <div class="banner-content">
-                                        <h6>Thức ăn cho chó</h6>
-                                        <h1>Giảm giá tất cả thức ăn cho chó lên tới 50%</h1>
-                                        <div class="btn-group">
-                                            <a class="primary-btn5 btn-md" href="shop.html">Cửa hàng</a>
-                                            <a class="primary-btn6" href="shop-details.html">Xem chi tiết</a>
+                @if ($sliders && $sliders->isNotEmpty())
+                    @foreach ($sliders as $slide)
+                        @if ($slide->title)
+                            <div class="swiper-slide">
+                                <div class="hero-wrapper">
+                                    <div class="container">
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-6">
+                                                <div class="banner-content">
+                                                    <div class="d-flex">
+                                                        @if ($slide->category)
+                                                            <h6>{{ $slide->danhmuc->name }}</h6>
+                                                        @endif
+                                                        @if ($slide->price)
+                                                            <p class="fs-5"
+                                                                style="margin-bottom: 20px;
+                                                        font-size: 1.4rem;
+                                                        font-weight: 400;
+                                                        color: var(--primary-color3);
+                                                        font-family: var(--font-cabin);
+                                                        text-transform: capitalize;
+                                                        position: relative;
+                                                        padding-left: 43px;">
+                                                                -
+                                                                @if ($slide->price <= 100)
+                                                                    {{ $slide->price }}%
+                                                                @else
+                                                                    {{ format_cash($slide->price) }}
+                                                                @endif
+                                                            </p>
+                                                        @endif
+                                                    </div>
+
+                                                    @if ($slide->title)
+                                                        <h1 class="mb-3">{{ $slide->title }}</h1>
+                                                    @endif
+                                                    @if ($slide->description)
+                                                        <h3 class="mb-3">{{ $slide->description }}</h3>
+                                                    @endif
+                                                    @if ($slide->button_text)
+                                                        <div class="btn-group">
+                                                            <a class="primary-btn6"
+                                                                href="{{ $slide->button_link_text ?? '#' }}">{{ $slide->button_text }}</a>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            @if ($slide->image)
+                                                <div class="col-lg-6 d-flex justify-content-end">
+                                                    <div class="hero-img">
+                                                        <img class="img-fluid banner-imgas"
+                                                            src="{{ getImage($slide->image) }}"
+                                                            alt="{{ $slide->title ?? null }}">
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 d-flex justify-content-end">
-                                    <div class="hero-img">
-                                        <img class="img-fluid banner-imgas"
-                                            src="{{ asset('assets/clients/images/bg/h3-banner-img.png') }}" alt>
+                            </div>
+                        @else
+                            <div class="swiper-slide">
+                                <img src="{{ getImage($slide->image) }}" class="w-100 h-100 object-cover"
+                                    @if ($slide->button_link_text) onclick="window.location.href='{{ $slide->button_link_text }}'" @endif
+                                    style="cursor: pointer;">
+                            </div>
+                        @endif
+                    @endforeach
+                @else
+                    <div class="swiper-slide">
+                        <div class="hero-wrapper">
+                            <div class="container">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6">
+                                        <div class="banner-content">
+                                            <h6>Thức ăn cho chó</h6>
+                                            <h1>Giảm giá tất cả thức ăn cho chó lên tới 50%</h1>
+                                            <div class="btn-group">
+                                                <a class="primary-btn5 btn-md" href="shop.html">Cửa hàng</a>
+                                                <a class="primary-btn6" href="shop-details.html">Xem chi tiết</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 d-flex justify-content-end">
+                                        <div class="hero-img">
+                                            <img class="img-fluid banner-imgas"
+                                                src="{{ asset('assets/clients/images/bg/h3-banner-img.png') }}" alt>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="hero-wrapper">
-                        <div class="container">
-                            <div class="row align-items-center">
-                                <div class="col-lg-6">
-                                    <div class="banner-content">
-                                        <h6>Thức ăn cho chó</h6>
-                                        <h1>Giảm giá tất cả thức ăn cho chó lên tới 50%</h1>
-                                        <div class="btn-group">
-                                            <a class="primary-btn5 btn-md" href="shop.html">Cửa hàng</a>
-                                            <a class="primary-btn6" href="shop-details.html">Xem chi tiết</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 d-flex justify-content-end">
-                                    <div class="hero-img">
-                                        <img class="img-fluid banner-imgas"
-                                            src="{{ asset('assets/clients/images/bg/h3-banner-img.png') }}" alt>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="hero-wrapper">
-                        <div class="container">
-                            <div class="row align-items-center">
-                                <div class="col-lg-6">
-                                    <div class="banner-content">
-                                        <h6>Thức ăn cho chó</h6>
-                                        <h1>Giảm giá tất cả thức ăn cho chó lên tới 50%</h1>
-                                        <div class="btn-group">
-                                            <a class="primary-btn5 btn-md" href="shop.html">Cửa hàng</a>
-                                            <a class="primary-btn6" href="shop-details.html">Xem chi tiết</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 d-flex justify-content-end">
-                                    <div class="hero-img">
-                                        <img class="img-fluid banner-imgas"
-                                            src="{{ asset('assets/clients/images/bg/h3-banner-img.png') }}" alt>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endif
             </div>
         </div>
         <div class="right-sidebar">

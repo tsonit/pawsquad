@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Slider extends Model
 {
     use HasFactory;
-    public $table="sliders";
-    public $fillable=[
+    public $table = "sliders";
+    public $fillable = [
         'image',
         'category',
         'title',
@@ -20,4 +20,8 @@ class Slider extends Model
         'button_link_text',
         'order'
     ];
+    public function danhmuc()
+    {
+        return $this->belongsTo(Category::class, 'category', 'id');
+    }
 }
