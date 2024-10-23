@@ -174,6 +174,7 @@
                 <div class="col-md-8 ">
                     <div class="card">
                         <div class="card-header">
+
                             <h5 class="card-title">Danh sách Menu</h5>
                         </div>
                         <div class="card-body">
@@ -399,9 +400,9 @@
                         },
                         success: function(data) {
                             if (data.success) {
-                                notifyMe('success',data.message)
+                                notifyMe('success', data.message)
                             } else {
-                                notifyMe('error',data.message)
+                                notifyMe('error', data.message)
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
@@ -467,6 +468,43 @@
                 const filteredMenuItems = menuItems.filter(item => !childIds.has(item.id));
 
                 return filteredMenuItems;
+            }
+
+
+            $.ajax({
+                url: "{{ route('admin.menu.getMenu') }}",
+                method: 'GET',
+                success: function(data) {
+                    if (data) {
+                        loadMenuData(data);
+                        initializeNestedSortables(); // Khởi tạo lại sau khi load
+
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Lỗi khi load menu:', errorThrown);
+                }
+            });
+
+            function loadMenuData(menuData) {
+                // Xử lý từng mục menu
+                menuData.forEach(item => {
+                    const menuItem = createMenuItem(item.id, item.text, 'custom-link', item.url);
+                    menuList.appendChild(menuItem);
+                    if (item.children && item.children.length > 0) {
+                        loadSubMenu(menuItem.querySelector('.nested-menu'), item.children);
+                    }
+                });
+            }
+
+            function loadSubMenu(parentElement, children) {
+                children.forEach(child => {
+                    const subMenuItem = createMenuItem(child.id, child.text, 'custom-link', child.url);
+                    parentElement.appendChild(subMenuItem);
+                    if (child.children && child.children.length > 0) {
+                        loadSubMenu(subMenuItem.querySelector('.nested-menu'), child.children);
+                    }
+                });
             }
 
         });

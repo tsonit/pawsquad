@@ -10,10 +10,11 @@ use Illuminate\Http\Request;
 
 class MenuControllerAdmin extends Controller
 {
-    public function index(Request $request){
-        $categories = Category::where('status',1)->get();
-        $services = Service::where('status',1)->get();
-        return view('admin.menu.index',compact('categories','services'));
+    public function index(Request $request)
+    {
+        $categories = Category::where('status', 1)->get();
+        $services = Service::where('status', 1)->get();
+        return view('admin.menu.index', compact('categories', 'services'));
     }
     public function save(Request $request)
     {
@@ -50,5 +51,34 @@ class MenuControllerAdmin extends Controller
                 $this->saveMenuItem($child, $menu->id, $index); // Gọi đệ quy để lưu child
             }
         }
+    }
+    public function getMenuData()
+    {
+        $menus = Menu::orderBy('order')->get();
+
+        // Hàm để xây dựng cấu trúc lồng nhau
+        $menuTree = $this->buildMenuTree($menus);
+
+        return response()->json($menuTree);
+    }
+
+    private function buildMenuTree($menus, $parentId = null)
+    {
+        $menuTree = [];
+
+        foreach ($menus as $menu) {
+            if ($menu->parent_id == $parentId) {
+                $children = $this->buildMenuTree($menus, $menu->id); // Đệ quy để tìm các children
+                $menuData = [
+                    'id' => $menu->id,
+                    'text' => $menu->text,
+                    'url' => $menu->url,
+                    'children' => $children, // Thêm children vào nếu có
+                ];
+                $menuTree[] = $menuData;
+            }
+        }
+
+        return $menuTree;
     }
 }

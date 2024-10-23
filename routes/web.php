@@ -296,6 +296,7 @@ Route::middleware(['checkaccount'])->group(function () {
                 function () {
                     Route::match(['get', 'post'], '/', [MenuControllerAdmin::class, 'index'])->name('index');
                     Route::post('save',[MenuControllerAdmin::class,'save'])->name('saveMenu');
+                    Route::get('getMenu',[MenuControllerAdmin::class,'getMenuData'])->name('getMenu');
                 }
             );
             Route::middleware(['role:10'])->prefix('subscribers')->name('subscribers.')->group(
