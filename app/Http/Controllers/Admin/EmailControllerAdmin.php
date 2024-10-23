@@ -14,9 +14,9 @@ class EmailControllerAdmin extends Controller
     public function index(Request $request)
     {
         if ($request->isMethod('post')) {
-            $categories = EmailContent::select(['id', 'email_type', 'content']);
+            $email = EmailContent::where('type',0)->select(['id', 'email_type', 'content']);
 
-            $data = DataTables::of($categories)
+            $data = DataTables::of($email)
                 ->filter(function ($query) use ($request) {
                     if ($request->has('search') && !empty($request->get('search')['value'])) {
                         $search = $request->get('search')['value'];
@@ -59,7 +59,7 @@ class EmailControllerAdmin extends Controller
     }
     public function edit($id)
     {
-        $data = EmailContent::find($id);
+        $data = EmailContent::where('type',0)->find($id);
         if (!$data) {
             return redirect(route('admin.emails.index'))->withErrorMessage('Không tìm thấy email.');
         }
@@ -68,7 +68,7 @@ class EmailControllerAdmin extends Controller
 
     public function postEdit(Request $request, $id)
     {
-        $data = EmailContent::find($id);
+        $data = EmailContent::where('type',0)->find($id);
         if (!$data) {
             return response()->json([
                 'message' => "Không tìm thấy ID Email"
@@ -83,7 +83,7 @@ class EmailControllerAdmin extends Controller
     }
     public function getTheme($id)
     {
-        $data = EmailContent::find($id);
+        $data = EmailContent::where('type',0)->find($id);
         if (!$data) {
             return redirect(route('admin.emails.index'))->withErrorMessage('Không tìm thấy email.');
         }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\MenuControllerAdmin;
 use App\Http\Controllers\Admin\ProductControllerAdmin;
 use App\Http\Controllers\Admin\ServiceControllerAdmin;
 use App\Http\Controllers\Admin\SliderControllerAdmin;
+use App\Http\Controllers\Admin\SubscriberControllerAdmin;
 use App\Http\Controllers\Admin\UploadControllerAdmin;
 use App\Http\Controllers\Admin\VariationsControllerAdmin;
 use App\Http\Controllers\Admin\VariationValuesControllerAdmin;
@@ -293,6 +294,21 @@ Route::middleware(['checkaccount'])->group(function () {
                 function () {
                     Route::match(['get', 'post'], '/', [MenuControllerAdmin::class, 'index'])->name('index');
                     Route::post('save',[MenuControllerAdmin::class,'save'])->name('saveMenu');
+                }
+            );
+            Route::middleware(['role:10'])->prefix('subscribers')->name('subscribers.')->group(
+                function () {
+                    Route::match(['get', 'post'], '/', [SubscriberControllerAdmin::class, 'index'])->name('index');
+                    Route::match(['get', 'post'], '/theme', [SubscriberControllerAdmin::class, 'theme'])->name('theme');
+                    Route::get('editTheme/{id?}', [SubscriberControllerAdmin::class, 'editTheme'])->name('editSubscriberTheme')->where(['id' => '[0-9]+']);
+                    Route::post('editTheme/{id?}', [SubscriberControllerAdmin::class, 'postEditTheme'])->name('postEditSubscriberTheme');
+                    Route::get('getTheme/{id?}', [SubscriberControllerAdmin::class, 'getTheme'])->name('getTheme')->where(['id' => '[0-9]+']);
+                    Route::post('uploadAsset', [SubscriberControllerAdmin::class, 'uploadAsset'])->name('uploadAsset');
+                    Route::get('delete/{id?}', [SubscriberControllerAdmin::class, 'delete'])->name('deleteSubscriber')->where(['id' => '[0-9]+']);
+                    Route::get('add', [SubscriberControllerAdmin::class, 'add'])->name('addSubscriber');
+                    Route::post('add', [SubscriberControllerAdmin::class, 'postAdd'])->name('postAddSubscriber');
+                    Route::get('edit/{id?}', [SubscriberControllerAdmin::class, 'edit'])->name('editSubscriber')->where(['id' => '[0-9]+']);
+                    Route::put('edit/{id?}', [SubscriberControllerAdmin::class, 'postEdit'])->name('postEditSubscriber');
                 }
             );
         });

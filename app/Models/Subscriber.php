@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EmailContent extends Model
+class Subscriber extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'email_type',
-        'content',
-        'type'
+    public $table="subscribers";
+    public $fillable=[
+        'email',
+        'fullname',
+        'status'
     ];
-
 }

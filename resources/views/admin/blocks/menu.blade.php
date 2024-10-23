@@ -136,5 +136,29 @@
             </a>
         </li>
 
+        <li class="menu-item {{ Route::is(['admin.subscribers.*']) ? 'active open' : '' }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon fa-regular fa-newspaper"></i>
+                <div>Nhận bản tin</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ Route::is('admin.subscribers.index') ? 'active open' : '' }}" style="">
+                    <a href="{{ route('admin.subscribers.index') }}" class="menu-link">
+                        <div>Danh sách người đăng ký</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Route::is('admin.subscribers.theme') ? 'active open' : '' }}" style="">
+                    <a href="{{ route('admin.subscribers.theme') }}" class="menu-link">
+                        <div>Giao diện chiến dịch</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Route::is('admin.subscribers.index') ? 'active open' : '' }}" style="">
+                    <a href="{{ route('admin.subscribers.index') }}" class="menu-link">
+                        <div>Gửi chiến dịch</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
     </ul>
 </aside>
