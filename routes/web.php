@@ -313,6 +313,8 @@ Route::middleware(['checkaccount'])->group(function () {
                     Route::get('edit/{id?}', [SubscriberControllerAdmin::class, 'edit'])->name('editSubscriber')->where(['id' => '[0-9]+']);
                     Route::put('edit/{id?}', [SubscriberControllerAdmin::class, 'postEdit'])->name('postEditSubscriber');
                     Route::post('changeStatus', [SubscriberControllerAdmin::class, 'changeStatus'])->name('changeStatus');
+                    Route::get('newsletter', [SubscriberControllerAdmin::class, 'indexNewsletter'])->name('indexNewsletter');
+                    Route::post('newsletter', [SubscriberControllerAdmin::class, 'sendNewsletter'])->name('sendNewsletter');
                 }
             );
         });

@@ -152,8 +152,8 @@
                         <div>Giao diện chiến dịch</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.subscribers.index') ? 'active open' : '' }}" style="">
-                    <a href="{{ route('admin.subscribers.index') }}" class="menu-link">
+                <li class="menu-item {{ Route::is('admin.subscribers.indexNewsletter') ? 'active open' : '' }}" style="">
+                    <a href="{{ route('admin.subscribers.indexNewsletter') }}" class="menu-link">
                         <div>Gửi chiến dịch</div>
                     </a>
                 </li>

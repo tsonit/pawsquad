@@ -16,16 +16,20 @@ class ThemeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data, $type, $template;
+    public $data, $type, $template,$subject;
 
-    public function __construct($data, $type)
+    public function __construct($data, $type,$subject=NULL)
     {
         $this->data = $data;
         $this->type = $type;
+        $this->subject = $subject;
         $this->template = EmailContent::where('email_type', $type)->first();
     }
     public function build()
     {
+        if($this->subject){
+            $this->subject($this->subject);
+        }
         // Sử dụng nội dung HTML đã lưu trong $this->template->content
         $content = $this->template->content;
 
@@ -61,6 +65,8 @@ class ThemeMail extends Mailable
             '{PAYMENT_METHOD_INVOICE}' => $this->data['payment_method_invoice'] ?? NULL,
             '{ORDER_STATUS}' => $this->data['order_status_invoice'] ?? NULL,
             '{PRICE_INVOICE}' => $this->data['price_invoice'] ?? NULL,
+            '{SUBSCRIBER_NAME}'  => $this->data['name'] ?? NULL,
+            '{SUBSCRIBER_EMAIL}' => $this->data['email'] ?? NULL,
         ];
         return str_replace(array_keys($replaceTags), array_values($replaceTags), $content);
     }

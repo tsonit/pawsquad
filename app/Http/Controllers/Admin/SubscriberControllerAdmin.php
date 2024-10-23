@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ThemeMail;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\ServicesRequestAdmin;
+use App\Jobs\SendNewsletterJob;
 use App\Models\EmailContent;
 use App\Models\Service;
 use App\Models\Subscriber;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 use Intervention\Image\Laravel\Facades\Image;
@@ -230,5 +233,51 @@ class SubscriberControllerAdmin extends Controller
         $subscriber->save();
 
         return response()->json(['message' => 'Cập nhật trạng thái thành công.', 'status' => 'success']);
+    }
+
+    public function indexNewsletter()
+    {
+        $subscribers = Subscriber::select('email', 'fullname', 'status')->where('status', 1)->get();
+        $themes = EmailContent::where('type', 1)->get();
+        return view('admin.subscribers.index_newsletter', compact('subscribers', 'themes'));
+    }
+    public function sendNewsletter(Request $request)
+    {
+        // Loại bỏ "select-all" khỏi mảng 'to'
+        $to = array_filter($request->input('to'), function ($email) {
+            return $email !== 'select-all';
+        });
+        $request->merge(['to' => $to]);
+
+        // Xác thực dữ liệu
+        $validatedData = $request->validate([
+            'to' => 'required|array',
+            'to.*' => 'email|distinct',
+            'subject' => 'required|string|max:255',
+            'campaign' => 'required|string',
+        ], [
+            'to.required' => 'Trường "Gửi đến" là bắt buộc.',
+            'to.array' => 'Trường "Gửi đến" phải là một mảng.',
+            'to.*.email' => 'Mỗi địa chỉ email phải hợp lệ.',
+            'to.*.distinct' => 'Các địa chỉ email không được trùng lặp.',
+            'subject.required' => 'Tiêu đề email là bắt buộc.',
+            'subject.string' => 'Tiêu đề phải là một chuỗi.',
+            'subject.max' => 'Tiêu đề không được vượt quá 255 ký tự.',
+            'campaign.required' => 'Chiến dịch là bắt buộc.',
+            'campaign.string' => 'Chiến dịch phải là một chuỗi.',
+        ]);
+        $subject = $request->subject;
+        $emailContent = EmailContent::where('type', 1)->where('email_type', $request->campaign)->first();
+        if ($emailContent == null) {
+            return redirect(route('admin.subscribers.indexNewsletter'))->withErrorMessage('Không tìm thấy chiến dịch.');
+        }
+
+        Subscriber::whereIn('email', $to)->where('status', 1)
+            ->chunk(500, function ($subscribers) use ($request, $subject) {
+                foreach ($subscribers->chunk(500) as $chunk) {
+                    SendNewsletterJob::dispatch($chunk, $request->campaign, $subject);
+                }
+            });
+        return redirect(route('admin.subscribers.indexNewsletter'))->withSuccessMessage('Gửi chiến dịch thành công');
     }
 }
