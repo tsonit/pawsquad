@@ -478,19 +478,20 @@
                     <div class="newsletter-wrap">
                         <div class="section-title3 mb-40">
                             <span>Đăng ký</span>
-                            <h2>Nhận thông báo của chúng tôi</h2>
+                            <h2 class="fs-1">Nhận thông báo của chúng tôi</h2>
                         </div>
-                        <form class="contact-form">
-                            <div class="form-inner d-flex flex-column w-100">
-                                <div class="border-bottom w-100">
-                                    <input type="text" class="form-control border-0" placeholder="Nhập họ tên"
-                                        name="fullname" required>
+                        <form id="subscriber-form" class="contact-form" method="POST" action="{{ route('subscriber.join') }}">
+                            <div class="form-inner d-flex flex-column w-100 p-3">
+                                <div class="w-100">
+                                    <input type="text" class="form-control border-bottom mb-2" placeholder="Nhập họ tên"
+                                        name="fullname_subscriber">
                                 </div>
-                                <div class="border-bottom w-100">
-                                    <input type="email" class="form-control border-0" placeholder="Nhập địa chỉ email"
-                                        name="email" required>
+                                <div class="w-100 mt-2">
+                                    <input type="text" class="form-control border-bottom mb-2" placeholder="Nhập địa chỉ email"
+                                        name="email_subscriber">
                                 </div>
-                                <button type="submit" class="btn btn-primary my-2">Đăng ký</button>
+                                @csrf
+                                <button class="primary-btn6 btn-md my-2" style="height:40px;border-radius:5px;padding: 10px 28px;background:#F46F30">Đăng ký</button>
                             </div>
                         </form>
 

@@ -349,6 +349,7 @@
 
     @if (in_array(Route::currentRouteName(), ['home', 'service']))
         {!! JsValidator::formRequest('App\Http\Requests\BookingFormRequest', '#booking') !!}
+        {!! JsValidator::formRequest('App\Http\Requests\SubscriberFormRequest', '#subscriber-form') !!}
     @endif
 
     <script>
@@ -356,8 +357,6 @@
             if (level == 'danger') {
                 level = 'error';
             }
-
-            // Check if the toastr method corresponding to the level exists
             if (typeof toastr[level] == 'function') {
                 toastr.options = {
                     "timeOut": "5000",

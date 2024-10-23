@@ -32,6 +32,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Auth;
@@ -96,6 +97,7 @@ Route::middleware(['checkaccount'])->group(function () {
         Route::get('/dang-nhap/{provider}', 'getProviderTargetUrl')->name('login.google');
         Route::get('{provider}/callback', 'handleProviderCallback');
     });
+    Route::post('/ban-tin/tham-gia', [SubscriberController::class, 'join'])->name('subscriber.join');
     Route::middleware(['auth'])->group(function () {
         Route::get('/dang-xuat', [LoginController::class, 'logout'])->name('logout');
 
