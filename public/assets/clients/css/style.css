@@ -3017,7 +3017,7 @@ header.style-3 .main-menu ul>li.menu-item-has-children::after {
     font-family: bootstrap-icons;
     font-weight: 400;
     position: absolute;
-    top: 30px;
+    top: 27px;
     right: 5px;
     font-size: 13px;
     color: var(--title-color1)

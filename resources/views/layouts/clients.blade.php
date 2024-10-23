@@ -36,7 +36,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/clients/css/uiicss.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('assets/clients/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/clients/css/style.css') }}?v=0.1">
     <link rel="stylesheet" href="{{ asset('assets/clients/css/custom.css') }}?v=0.1">
 
     <link rel="stylesheet"

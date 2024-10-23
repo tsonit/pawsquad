@@ -40,30 +40,37 @@
                 </div>
             </div>
             <ul class="menu-list">
-                <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
-                    <a href="{{ route('home') }}">Trang chủ</a>
-                </li>
-                <li class="{{ request()->routeIs('about') ? 'active' : '' }}"><a href="{{ route('about') }}">Giới
-                        thiệu</a></li>
-                <li class="menu-item-has-children {{ request()->routeIs('service') ? 'active' : '' }}">
-                    <a href="#">Dịch vụ</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        @if (getService() && getService()->isNotEmpty())
-                            @foreach (getService() as $service)
-                                <li><a href="{{ route('service', ['slug' => $service->slug]) }}">{{ $service->name }}</a></li>
-                            @endforeach
+                @foreach (getMenu() as $menu)
+                    <li
+                        class="{{ $menu->url == 'services' || ($menu->children && $menu->children->isNotEmpty()) ? 'menu-item-has-children' : '' }}
+                        {{ request()->is($menu->url) ? 'active' : '' }}">
+                        <a
+                            href="{{ $menu->url == 'services' || ($menu->children && $menu->children->isNotEmpty()) ? '' : $menu->url }}">{{ $menu->text }}</a>
+                        @if ($menu->children && $menu->children->isNotEmpty())
+                            <!-- Kiểm tra xem có con không -->
+                            <ul class="sub-menu">
+                                @foreach ($menu->children as $child)
+                                    <!-- Lặp qua các mục con -->
+                                    <li class="{{ request()->is($child->url) ? 'active' : '' }}">
+                                        <a href="{{ $child->url }}">{{ $child->text }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
                         @endif
-                    </ul>
-                </li>
-                <li class="{{ request()->routeIs('product') ? 'active' : '' }}">
-                    <a href="{{ route('product') }}">Sản phẩm</a>
-                </li>
-                <li class="{{ request()->routeIs('brand') ? 'active' : '' }}">
-                    <a href="{{ route('brand') }}">Thương hiệu</a>
-                </li>
-                <li class="{{ request()->routeIs('blog') ? 'active' : '' }}">
-                    <a href="{{ route('blog') }}">Tin tức</a>
-                </li>
+                        @if ($menu->url == 'services')
+                            <ul class="sub-menu">
+                                @if (getService() && getService()->isNotEmpty())
+                                    @foreach (getService() as $service)
+                                        <li>
+                                            <a
+                                                href="{{ route('service', ['slug' => $service->slug]) }}">{{ $service->name }}</a>
+                                        </li>
+                                    @endforeach
+                                @endif
+                            </ul>
+                        @endif
+                    </li>
+                @endforeach
             </ul>
             <div class="for-mobile-menu d-lg-none d-block">
                 <div class="hotline mb-5">

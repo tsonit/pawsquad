@@ -6,6 +6,7 @@ use App\Models\AttributeSet;
 use App\Models\Blog;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Menu;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Service;
@@ -546,5 +547,8 @@ function getStatusBooking($type)
         default:
             return 'N/A';
     }
+}
+function getMenu(){
+    return Menu::with('children')->orderBy('order')->get(); 
 }
 
