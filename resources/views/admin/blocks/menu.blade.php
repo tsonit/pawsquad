@@ -129,6 +129,12 @@
                 <div>Slider</div>
             </a>
         </li>
+        <li class="menu-item {{ Route::is('admin.menu.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.menu.index') }}" class=" menu-link">
+                <i class="menu-icon tf-icons ti ti-menu"></i>
+                <div>Menu</div>
+            </a>
+        </li>
 
     </ul>
 </aside>

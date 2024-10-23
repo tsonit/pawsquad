@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryControllerAdmin;
 use App\Http\Controllers\Admin\ContactControllerAdmin;
 use App\Http\Controllers\Admin\EmailControllerAdmin;
 use App\Http\Controllers\Admin\HomeControllerAdmin;
+use App\Http\Controllers\Admin\MenuControllerAdmin;
 use App\Http\Controllers\Admin\ProductControllerAdmin;
 use App\Http\Controllers\Admin\ServiceControllerAdmin;
 use App\Http\Controllers\Admin\SliderControllerAdmin;
@@ -286,6 +287,12 @@ Route::middleware(['checkaccount'])->group(function () {
                     Route::get('edit/{id?}', [SliderControllerAdmin::class, 'edit'])->name('editSliders')->where(['id' => '[0-9]+']);
                     Route::put('edit/{id?}', [SliderControllerAdmin::class, 'postEdit'])->name('postEditSliders');
                     Route::get('delete/{id?}', [SliderControllerAdmin::class, 'delete'])->name('deleteSliders')->where(['id' => '[0-9]+']);
+                }
+            );
+            Route::middleware(['role:10'])->prefix('menu')->name('menu.')->group(
+                function () {
+                    Route::match(['get', 'post'], '/', [MenuControllerAdmin::class, 'index'])->name('index');
+                    Route::post('save',[MenuControllerAdmin::class,'save'])->name('saveMenu');
                 }
             );
         });
