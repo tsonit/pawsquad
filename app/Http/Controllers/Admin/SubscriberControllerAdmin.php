@@ -31,7 +31,7 @@ class SubscriberControllerAdmin extends Controller
                     }
                 })
                 ->addColumn('action', function ($row) {
-                    return ' <a href="' . route('admin.subcribers.deleteSubscriber', $row->id) . '" class="btn btn-sm btn-danger delete-btn" data-id="' . $row->id . '">Xóa</a>';
+                    return ' <a href="' . route('admin.subscribers.deleteSubscriber2', $row->id) . '" class="btn btn-sm btn-danger delete-btn" data-id="' . $row->id . '">Xóa</a>';
                 })
                 ->make(true);
             return $data;
@@ -127,6 +127,17 @@ class SubscriberControllerAdmin extends Controller
         $subscriber->delete();
         return redirect(route('admin.subscribers.theme'))->withSuccessMessage('Đã xóa chiến dịch thành công.');
     }
+    public function delete2()
+    {
+        $id = request()->id;
+        $subscriber = Subscriber::find($id);
+
+        if ($subscriber == NULL) {
+            return redirect(route('admin.subscribers.index'))->withErrorMessage('Không tìm thấy người đăng ký.');
+        }
+        $subscriber->delete();
+        return redirect(route('admin.subscribers.index'))->withSuccessMessage('Đã xóa người đăng ký thành công.');
+    }
     public function editTheme($id)
     {
         $data = EmailContent::where('type', 1)->find($id);
@@ -198,5 +209,26 @@ class SubscriberControllerAdmin extends Controller
     private function sanitizeFilename($filename)
     {
         return preg_replace('/[^a-z0-9\._\-]+/i', '_', $filename);
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $id = $request->id;
+        $status = $request->status;
+
+        if ($status != 0 && $status != 1) {
+            return response()->json(['message' => 'Trạng thái phải là 0 hoặc 1.', 'status' => 'error']);
+        }
+
+        $subscriber = Subscriber::find($id);
+
+        if ($subscriber == null) {
+            return response()->json(['message' => 'Người đăng ký không tồn tại.', 'status' => 'error']);
+        }
+
+        $subscriber->status = $status;
+        $subscriber->save();
+
+        return response()->json(['message' => 'Cập nhật trạng thái thành công.', 'status' => 'success']);
     }
 }

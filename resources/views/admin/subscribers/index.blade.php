@@ -133,18 +133,26 @@
                         // Status
                         targets: 4,
                         render: function(data, type, full, meta) {
-                            var invoiceStatus = full['status'] === 1 ? 'hien' : 'an';
-                            var statusBadge = {
-                                'hien': '<span class="me-2 badge d-flex align-items-center justify-content-center bg-success" style="white-space: nowrap;">Hiện</span>',
-                                'an': '<span class="me-2 badge d-flex align-items-center justify-content-center bg-secondary" style="white-space: nowrap;">Ẩn</span>'
-                            };
+                            var invoiceStatus = full['status'] == 1;
                             return (
                                 "<div class='d-inline-flex align-items-center'>" +
-                                statusBadge[invoiceStatus] +
+                                "<label class='switch switch-success' data-id='" + full['id'] +
+                                "'>" +
+                                "<input type='checkbox' class='switch-input' id='switch-" +
+                                full['id'] + "' " + (invoiceStatus ? "checked" : "") + ">" +
+                                "<span class='switch-toggle-slider'>" +
+                                "<span class='switch-on'>" +
+                                "<i class='ti ti-check'></i>" +
+                                "</span>" +
+                                "<span class='switch-off'>" +
+                                "<i class='ti ti-x'></i>" +
+                                "</span>" +
+                                "</span>" +
+                                "</label>" +
                                 "</div>"
                             );
                         }
-                    },
+                    }
                 ],
                 order: [
                     [1, 'desc']
@@ -208,6 +216,29 @@
                 },
                 zoom: true,
             });
+            $(document).on('change', '.switch-input', function() {
+                var dataId = $(this).closest('label').data('id'); // Lấy data-id từ label
+                var isChecked = $(this).is(':checked');
+                var status = isChecked ? 1 : 0;
+                console.log(status)
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: "{{ route('admin.subscribers.changeStatus') }}",
+                    type: 'POST',
+                    data: {
+                        id: dataId,
+                        status: status,
+                        _token: csrfToken
+                    },
+                    success: function(response) {
+                        notifyMe(response.status, response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Đã xảy ra lỗi:', error);
+                    }
+                });
+            });
+
         });
     </script>
 @endsection
