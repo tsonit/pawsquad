@@ -705,5 +705,21 @@ if (!function_exists('getName')) {
     {
         return $date ? Carbon::parse($date)->format('d/m/Y') : '';
     }
+    function getTextPayment($text)
+    {
+        $statusHtml = '';
 
+        switch ($text) {
+            case 'VNPAY':
+                $statusHtml = "VNPAY";
+                break;
+            case 'COD':
+                $statusHtml = "Tiền mặt";
+                break;
+            default:
+                break;
+        }
+
+        return $statusHtml;
+    }
 }

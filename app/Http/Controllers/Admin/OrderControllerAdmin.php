@@ -89,4 +89,11 @@ class OrderControllerAdmin extends Controller
         }
         return view('admin.orders.index');
     }
+    public function edit(Request $request,$id){
+        $order = Order::with(['address','orderItems','user'])->find($id);
+        if (!$order) {
+            return redirect(route('admin.orders.index'))->withErrorMessage('Không tìm thấy hoá đơn.');
+        }
+        return view('admin.orders.edit',compact('order'));
+    }
 }
