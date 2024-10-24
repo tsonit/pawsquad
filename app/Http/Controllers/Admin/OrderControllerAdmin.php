@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Order;
+use App\Models\OrderUpdate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-
+use Illuminate\Support\Facades\Validator;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 class OrderControllerAdmin extends Controller
 {
     public function index(Request $request)
@@ -95,5 +97,101 @@ class OrderControllerAdmin extends Controller
             return redirect(route('admin.orders.index'))->withErrorMessage('Không tìm thấy hoá đơn.');
         }
         return view('admin.orders.edit',compact('order'));
+    }
+
+    public function downloadOrder(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'code' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            $notification = array('message' => $validator->errors(), 'alert-type' => 'error');
+            return redirect()->back()->with($notification);
+        }
+
+        try {
+            if ($request->code != null) {
+                $searchCode = preg_replace('/[^0-9]/', '', $request->code);
+                $order = Order::with(['address', 'orderItems'])->where('id', $searchCode)
+                    ->where('user_id', auth()->user()->id)
+                    ->first();
+
+                if (!$order) {
+                    return redirect()->route('home')->with(noti('Không tìm thấy hoá đơn', 'error'));
+                }
+
+                $font_family = "'Roboto','sans-serif'";
+                $pdf = Pdf::loadView('clients.checkout.downloadInvoice', [
+                    'order' => $order,
+                    'font_family' => $font_family,
+                    'direction' => 'ltr',
+                    'default_text_align' => 'left',
+                    'reverse_text_align' => 'right'
+                ]);
+                // Trả về dữ liệu PDF dưới dạng phản hồi nhị phân
+                return response($pdf->output(), 200)
+                    ->header('Content-Type', 'application/pdf')
+                    ->header('Content-Disposition', 'attachment; filename="INV' . $order->id . '.pdf"');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with([
+                'message' => 'Đã xảy ra lỗi: ' . $e->getMessage(),
+                'alert-type' => 'error'
+            ]);
+        }
+    }
+    public function updatePaymentStatus(Request $request)
+    {
+        $order = Order::findOrFail((int)$request->order_id);
+        $order->order_status = $request->status;
+        $order->save();
+        if ($request->status == "PENDING") {
+            $status = "chờ thanh toán";
+        } else if ($request->status == 'PAID') {
+            $status = "đã thanh toán";
+        } else {
+            $status = "đã huỷ";
+        }
+        OrderUpdate::create([
+            'order_id' => $order->id,
+            'user_id' => auth()->user()->id,
+            'note' => 'Trạng thái thanh toán được cập nhật thành ' . $status . '.',
+        ]);
+
+        return true;
+    }
+
+    public function updateDeliveryStatus(Request $request)
+    {
+        $order = Order::findOrFail((int)$request->order_id);
+        $order->shipment_status = $request->status;
+        $order->save();
+        if ($request->status == "ORDERPLACE") {
+            $status = "đã được tạo";
+        } else   if ($request->status == "PACKED") {
+            $status = 'đã nhận và đang đóng gói';
+        } else  if ($request->status == "SHIPPED") {
+            $status = 'đã được vận chuyển';
+        } else   if ($request->status == "INTRANSIT") {
+            $status = 'đang trên đường đến điểm đến';
+        } else   if ($request->status == "OUTFORDELIVERY") {
+            $status = 'đang được giao cho người nhận';
+        } else   if ($request->status == "DELIVERED") {
+            $status = 'đã được giao hàng thành công';
+        } else  if ($request->status == "DELAYED") {
+            $status = 'đã bị trễ hẹn trong quá trình vận chuyển';
+        } else  if ($request->status == "EXCEPTION") {
+            $status = 'đã gặp vấn đề hoặc ngoại lệ trong quá trình vận chuyển';
+        } else  if ($request->status == "RETURNED") {
+            $status = 'đã được hoàn trả lại cho người gửi';
+        }
+        OrderUpdate::create([
+            'order_id' => $order->id,
+            'user_id' => auth()->user()->id,
+            'note' => 'Đơn hàng ' . $status . '.',
+        ]);
+
+        return true;
     }
 }

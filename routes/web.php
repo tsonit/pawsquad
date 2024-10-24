@@ -331,6 +331,9 @@ Route::middleware(['checkaccount'])->group(function () {
                     Route::match(['get', 'post'], '/', [OrderControllerAdmin::class, 'index'])->name('index');
                     Route::get('/{id?}', [OrderControllerAdmin::class, 'edit'])->name('editOrders')->where(['id' => '[0-9]+']);
                     Route::put('/{id?}', [OrderControllerAdmin::class, 'postEdit'])->name('postEditOrders');
+                    Route::get('/tai-xuong/{code}', [OrderControllerAdmin::class, 'downloadOrder'])->name('downloadOrder');
+                    Route::post('/update-payment-status', [OrderControllerAdmin::class, 'updatePaymentStatus'])->name('update_payment_status');
+                    Route::post('/update-delivery-status', [OrderControllerAdmin::class, 'updateDeliveryStatus'])->name('update_delivery_status');
                 }
             );
         });
