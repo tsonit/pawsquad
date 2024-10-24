@@ -11,12 +11,15 @@
 @endsection
 @section('content')
     <div class="hero3 mb-90">
+        @if(getOption('DB_SHORT_STANDOUT_NOTIFICATION'))
         <div class="background-text">
             <h2 class="marquee_text"><img src="{{ asset('assets/clients/images/icon/marque-foot.svg') }}"
-                    alt="image"><span>Nhận ngay mã giảm giá</span> lên tới 50%<img
-                    src="{{ asset('assets/clients/images/icon/marque-foot.svg') }}" alt="image"><span>Nhận ngay mã giảm
-                    giá</span> lên tới 50%</h2>
+                    alt="image">
+                    <span>{{ getOption('DB_SHORT_STANDOUT_NOTIFICATION') }}</span> <img
+                    src="{{ asset('assets/clients/images/icon/marque-foot.svg') }}" alt="image">
+                    <span>{{ getOption('DB_SHORT_STANDOUT_NOTIFICATION') }}</span> </h2>
         </div>
+        @endif
         <div class="swiper hero3-slider">
             <div class="swiper-wrapper">
                 @if ($sliders && $sliders->isNotEmpty())

@@ -29,18 +29,6 @@ class OptionControllerAdmin extends Controller
         } else {
             $image = decrypt($logoImage);
         }
-
-        $start_date = '';
-        $end_date = '';
-        $maintenance = '';
-        $maintenance_role = '';
-        if ($request->input('DB_MAINTENANCE_START') && $request->input('DB_MAINTENANCE_END')) {
-            $start_date = Carbon::createFromFormat('d/m/Y h:i A', $request->input('DB_MAINTENANCE_START'))->format('Y-m-d H:i:s');
-            $end_date = Carbon::createFromFormat('d/m/Y h:i A', $request->input('DB_MAINTENANCE_END'))->format('Y-m-d H:i:s');
-        }
-        $maintenance = $request->maintenance == 'on' ? "1" : "0";
-        $maintenance_role = $request->maintenance_role == 'on' ? "admin" : "all";
-
         $envValues = [
             'APP_URL' => $request->input('APP_URL'),
             'APP_NAME' => $request->input('APP_NAME'),
@@ -61,14 +49,9 @@ class OptionControllerAdmin extends Controller
             'DB_SOCIAL_LINK_FACEBOOK' => $request->input('DB_SOCIAL_LINK_FACEBOOK'),
             'DB_SOCIAL_LINK_YOUTUBE' => $request->input('DB_SOCIAL_LINK_YOUTUBE'),
             'DB_SOCIAL_LINK_TIKTOK' => $request->input('DB_SOCIAL_LINK_TIKTOK'),
-            'DB_SOCIAL_LINK_ZALO' => $request->input('DB_SOCIAL_LINK_ZALO'),
+            'DB_SHORT_STANDOUT_NOTIFICATION' => $request->input('DB_SHORT_STANDOUT_NOTIFICATION'),
             'NOCAPTCHA_SECRET' => $request->input('NOCAPTCHA_SECRET'),
             'NOCAPTCHA_SITEKEY' => $request->input('NOCAPTCHA_SITEKEY'),
-            'DB_MAINTENANCE_START' => $start_date,
-            'DB_MAINTENANCE_END' => $end_date,
-            'DB_MAINTENANCE_TEXT' => $request->input('DB_MAINTENANCE_TEXT'),
-            'DB_MAINTENANCE' => $maintenance,
-            'DB_MAINTENANCE_ROLE' => $maintenance_role,
         ];
         foreach ($envValues as $key => $value) {
             if (substr($key, 0, 3) === 'DB_') {

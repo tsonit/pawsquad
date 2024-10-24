@@ -7,10 +7,10 @@
                         <img src="{{ asset('assets/clients/images/logo/logo.png') }}" style="width:100px" alt="Logo">
                     </div>
                     <div class="widget-title">
-                        <h2>Pawsquad <br><span>hân hạnh phục vụ bạn</span></h2>
+                        <h2>{{ env('APP_NAME') }} <br><span>hân hạnh phục vụ bạn</span></h2>
                     </div>
                     <div class="footer-btn">
-                        <a class="primary-btn6" href="shop.html">Xem sản phẩm</a>
+                        <a class="primary-btn6" href="{{ route('product') }}">Xem sản phẩm</a>
                     </div>
                 </div>
             </div>
@@ -36,11 +36,11 @@
                     </div>
                     <div class="menu-container">
                         <ul>
-                            <li><a href="#">Trang cá nhân</a></li>
+                            <li><a href="{{ route('account') }}">Trang cá nhân</a></li>
                             <li><a href="#">Danh sách yêu thích</a></li>
-                            <li><a href="#">Tra cứu đơn hàng</a></li>
-                            <li><a href="#">Giỏ hàng</a></li>
-                            <li><a href="#">Danh sách hoá đơn</a></li>
+                            <li><a href="{{ route('account') }}">Tra cứu đơn hàng</a></li>
+                            <li><a href="{{ route('cart') }}">Giỏ hàng</a></li>
+                            <li><a href="{{ route('account') }}#don-hang">Danh sách hoá đơn</a></li>
                         </ul>
                     </div>
                 </div>
@@ -73,10 +73,20 @@
             <div class="col-lg-6 d-flex justify-content-md-end justify-content-center">
                 <div class="social-area">
                     <ul>
-                        <li><a href="https://www.facebook.com/"><i class="bx bxl-facebook"></i></a></li>
-                        <li><a href="https://twitter.com/"><i class="bx bxl-twitter"></i></a></li>
-                        <li><a href="https://www.pinterest.com/"><i class="bx bxl-pinterest-alt"></i></a></li>
-                        <li><a href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a></li>
+                        @if (getOption('DB_SOCIAL_LINK_FACEBOOK'))
+                            <li><a href="{{ getOption('DB_SOCIAL_LINK_FACEBOOK') }}" target="_blank"><i
+                                        class="bx bxl-facebook"></i></a></li>
+                        @endif
+
+                        @if (getOption('DB_SOCIAL_LINK_TIKTOK'))
+                            <li><a href="{{ getOption('DB_SOCIAL_LINK_TIKTOK') }}" target="_blank"><i
+                                        class="bx bxl-tiktok"></i></a></li>
+                        @endif
+
+                        @if (getOption('DB_SOCIAL_LINK_YOUTUBE'))
+                            <li><a href="{{ getOption('DB_SOCIAL_LINK_YOUTUBE') }}" target="_blank"><i
+                                        class="bx bxl-youtube"></i></a></li>
+                        @endif
                     </ul>
                 </div>
             </div>

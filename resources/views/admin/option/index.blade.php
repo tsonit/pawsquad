@@ -27,7 +27,6 @@
                         <i class="fas fa-question"></i>
                     </a>
                 </div>
-
             </div>
             <div class="row product-adding">
                 <div class="col-xl-12">
@@ -65,6 +64,13 @@
                                             <div class="col-xl-8 col-md-7">
                                                 <input class="form-control mb-2" type="text" name="APP_NAME"
                                                     value="{{ old('APP_NAME', env('APP_NAME')) }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom1" class="col-xl-3 col-md-4">Thông báo ngắn nổi bật</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input class="form-control mb-2" type="text" name="DB_SHORT_STANDOUT_NOTIFICATION"
+                                                    value="{{ old('DB_SHORT_STANDOUT_NOTIFICATION', getOption('DB_SHORT_STANDOUT_NOTIFICATION')) }}">
                                             </div>
                                         </div>
 
@@ -255,15 +261,6 @@
                                                             <input class="form-control mb-2" type="text"
                                                                 name="DB_SOCIAL_LINK_TIKTOK"
                                                                 value="{{ old('DB_SOCIAL_LINK_TIKTOK', getOption('DB_SOCIAL_LINK_TIKTOK')) }}">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="validationCustom1"
-                                                            class="col-xl-3 col-md-4">Zalo</label>
-                                                        <div class="col-xl-8 col-md-7">
-                                                            <input class="form-control mb-2" type="text"
-                                                                name="DB_SOCIAL_LINK_ZALO"
-                                                                value="{{ old('DB_SOCIAL_LINK_ZALO', getOption('DB_SOCIAL_LINK_ZALO')) }}">
                                                         </div>
                                                     </div>
                                                 </div>
