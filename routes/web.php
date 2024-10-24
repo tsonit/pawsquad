@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ContactControllerAdmin;
 use App\Http\Controllers\Admin\EmailControllerAdmin;
 use App\Http\Controllers\Admin\HomeControllerAdmin;
 use App\Http\Controllers\Admin\MenuControllerAdmin;
+use App\Http\Controllers\Admin\OptionControllerAdmin;
 use App\Http\Controllers\Admin\ProductControllerAdmin;
 use App\Http\Controllers\Admin\ServiceControllerAdmin;
 use App\Http\Controllers\Admin\SliderControllerAdmin;
@@ -316,6 +317,12 @@ Route::middleware(['checkaccount'])->group(function () {
                     Route::post('changeStatus', [SubscriberControllerAdmin::class, 'changeStatus'])->name('changeStatus');
                     Route::get('newsletter', [SubscriberControllerAdmin::class, 'indexNewsletter'])->name('indexNewsletter');
                     Route::post('newsletter', [SubscriberControllerAdmin::class, 'sendNewsletter'])->name('sendNewsletter');
+                }
+            );
+            Route::middleware(['role:10'])->prefix('option')->name('options.')->group(
+                function () {
+                    Route::get('/', [OptionControllerAdmin::class, 'index'])->name('index');
+                    Route::post('/', [OptionControllerAdmin::class, 'postEditOption'])->name('postEditOption');
                 }
             );
         });

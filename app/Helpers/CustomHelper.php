@@ -3,6 +3,7 @@
 use App\Models\BannerModel;
 use App\Models\CategoryModel;
 use App\Models\DiscordModel;
+use App\Models\Option;
 use App\Models\OptionsModel;
 use App\Models\PaymentHistoryModel;
 use App\Models\ProductModel;
@@ -78,7 +79,7 @@ if (!function_exists('getName')) {
 
     function getOption($name)
     {
-        $option = OptionsModel::where('name', $name)->first();
+        $option = Option::where('name', $name)->first();
         return $option ? $option->value : null;
     }
     function showAlert()
