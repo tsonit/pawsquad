@@ -279,14 +279,15 @@
                 });
             }
 
-            function createMenuItem(id, text, type, url = "NULL") {
+            function createMenuItem(id, text, type, url = "NULL", load=false) {
                 const li = document.createElement('li');
                 li.className = 'accordion-item nested-sortable';
                 li.dataset.id = id;
+                const urlValue = load ? url : id;
                 const content = type === 'custom-link' ?
                     `<div class="mb-3 my-3">
                         <label>Đường dẫn:</label>
-                        <input type="text" class="form-control" value="${id}" id="inputUrl${id}">
+                        <input type="text" class="form-control" value="${urlValue}" id="inputUrl${id}">
                     </div>
                     <div class="mb-3 my-3">
                         <label>Văn bản:</label>
@@ -489,7 +490,7 @@
             function loadMenuData(menuData) {
                 // Xử lý từng mục menu
                 menuData.forEach(item => {
-                    const menuItem = createMenuItem(item.id, item.text, 'custom-link', item.url);
+                    const menuItem = createMenuItem(item.id, item.text, 'custom-link', item.url,true);
                     menuList.appendChild(menuItem);
                     if (item.children && item.children.length > 0) {
                         loadSubMenu(menuItem.querySelector('.nested-menu'), item.children);
@@ -499,7 +500,7 @@
 
             function loadSubMenu(parentElement, children) {
                 children.forEach(child => {
-                    const subMenuItem = createMenuItem(child.id, child.text, 'custom-link', child.url);
+                    const subMenuItem = createMenuItem(child.id, child.text, 'custom-link', child.url,true);
                     parentElement.appendChild(subMenuItem);
                     if (child.children && child.children.length > 0) {
                         loadSubMenu(subMenuItem.querySelector('.nested-menu'), child.children);
