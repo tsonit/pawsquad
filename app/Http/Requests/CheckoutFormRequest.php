@@ -21,7 +21,7 @@ class CheckoutFormRequest extends FormRequest
             ],
             'phone' => 'required|numeric|digits_between:8,12|regex:/^[0-9]{8,12}$/',
             'address' => 'required',
-            'message' => 'nullable|max:300'
+            'note' => 'nullable|max:300'
         ];
         if ($this->isMethod('post') || $this->isMethod('put')) {
             $rules['province_id'] = 'required|numeric';
@@ -52,7 +52,7 @@ class CheckoutFormRequest extends FormRequest
             'village_id.required' => 'Thôn/Xóm là bắt buộc.',
             'village_id.numeric' => 'Thôn/Xóm không hợp lệ.',
             'address.required' => 'Địa chỉ chi tiết là bắt buộc.',
-            'message.max' => 'Ghi chú tối đa :max ký tự.',
+            'note.max' => 'Ghi chú tối đa :max ký tự.',
         ];
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\EmailControllerAdmin;
 use App\Http\Controllers\Admin\HomeControllerAdmin;
 use App\Http\Controllers\Admin\MenuControllerAdmin;
 use App\Http\Controllers\Admin\OptionControllerAdmin;
+use App\Http\Controllers\Admin\OrderControllerAdmin;
 use App\Http\Controllers\Admin\ProductControllerAdmin;
 use App\Http\Controllers\Admin\ServiceControllerAdmin;
 use App\Http\Controllers\Admin\SliderControllerAdmin;
@@ -323,6 +324,13 @@ Route::middleware(['checkaccount'])->group(function () {
                 function () {
                     Route::get('/', [OptionControllerAdmin::class, 'index'])->name('index');
                     Route::post('/', [OptionControllerAdmin::class, 'postEditOption'])->name('postEditOption');
+                }
+            );
+            Route::middleware(['role:10'])->prefix('orders')->name('orders.')->group(
+                function () {
+                    Route::match(['get', 'post'], '/', [OrderControllerAdmin::class, 'index'])->name('index');
+                    Route::get('edit/{id?}', [OrderControllerAdmin::class, 'edit'])->name('editBrands')->where(['id' => '[0-9]+']);
+                    Route::put('edit/{id?}', [OrderControllerAdmin::class, 'postEdit'])->name('postEditBrands');
                 }
             );
         });

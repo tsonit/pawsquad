@@ -236,7 +236,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="label-input-field form-inner">
-                                            <textarea name="message" placeholder="Ghi chú cho Shop (nếu có)" rows="6">{{ old('message') }}</textarea>
+                                            <textarea name="note" placeholder="Ghi chú cho Shop (nếu có)" rows="6">{{ old('note') }}</textarea>
                                         </div>
                                     </div>
                                 </div>
