@@ -329,8 +329,8 @@ Route::middleware(['checkaccount'])->group(function () {
             Route::middleware(['role:10'])->prefix('orders')->name('orders.')->group(
                 function () {
                     Route::match(['get', 'post'], '/', [OrderControllerAdmin::class, 'index'])->name('index');
-                    Route::get('edit/{id?}', [OrderControllerAdmin::class, 'edit'])->name('editBrands')->where(['id' => '[0-9]+']);
-                    Route::put('edit/{id?}', [OrderControllerAdmin::class, 'postEdit'])->name('postEditBrands');
+                    Route::get('/{id?}', [OrderControllerAdmin::class, 'edit'])->name('editOrders')->where(['id' => '[0-9]+']);
+                    Route::put('/{id?}', [OrderControllerAdmin::class, 'postEdit'])->name('postEditOrders');
                 }
             );
         });

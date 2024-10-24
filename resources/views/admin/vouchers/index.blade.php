@@ -20,6 +20,7 @@
     <style>
         .flatpickr-calendar {
             left: 50% !important;
+            top:50%!important;
             transform: translateX(-50%) !important;
         }
 
@@ -278,7 +279,7 @@
                     }
                 }
             });
-            $('body').append('<input type="hidden" id="dateRange">');
+            $('.datatables-products').append('<input type="hidden" id="dateRange" style="display:none">');
             Fancybox.bind("[data-fancybox]", {
                 infinite: false,
                 transitionEffect: "fade",

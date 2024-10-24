@@ -16,18 +16,10 @@
         href="{{ asset('assets/admin/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/libs/pickr/pickr-themes.css') }}" />
-
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/libs/flatpickr/flatpickr.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/libs/tagify/tagify.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/libs/shepherd/shepherd.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
-    <link rel="stylesheet"
-        href="{{ asset('assets/admin/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/libs/pickr/pickr-themes.css') }}" />
     <style>
         .flatpickr-calendar {
             left: 50% !important;
+            top:50%!important;
             transform: translateX(-50%) !important;
         }
 
@@ -95,15 +87,6 @@
     <script src="{{ asset('assets/admin/vendor/libs/select2/select2.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script src="{{ asset('assets/admin/vendor/libs/block-ui/block-ui.js') }}"></script>
-
-    <script src="{{ asset('assets/admin/vendor/libs/moment/moment.js') }}"></script>
-    <script src="{{ asset('assets/admin/vendor/libs/flatpickr/flatpickr.js') }}"></script>
-    <script src="{{ asset('assets/admin/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
-    <script src="{{ asset('assets/admin/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
-    <script src="{{ asset('assets/admin/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
-    <script src="{{ asset('assets/admin/vendor/libs/pickr/pickr.js') }}"></script>
-    <script src="{{ asset('assets/admin/vendor/libs/flatpickr/vn.js') }}?v=1"></script>
-
 
     <script src="{{ asset('assets/admin/vendor/libs/moment/moment.js') }}"></script>
     <script src="{{ asset('assets/admin/vendor/libs/flatpickr/flatpickr.js') }}"></script>
@@ -393,7 +376,7 @@
                     }
                 }
             });
-            $('body').append('<input type="hidden" id="dateRange">');
+            $('.datatables-products').append('<input type="hidden" id="dateRange" style="display:none">');
             Fancybox.bind("[data-fancybox]", {
                 infinite: false,
                 transitionEffect: "fade",

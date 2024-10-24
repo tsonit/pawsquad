@@ -159,6 +159,12 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item {{ Route::is('admin.orders.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.orders.index') }}" class=" menu-link">
+                <i class="menu-icon fa-solid fa-file-invoice"></i>
+                <div>Hoá đơn</div>
+            </a>
+        </li>
 
     </ul>
 </aside>
