@@ -31,6 +31,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderTrackingController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ServiceController;
@@ -109,6 +110,8 @@ Route::middleware(['checkaccount'])->group(function () {
         Route::get('/email/xac-minh/{id}/{hash}', [UserController::class, 'checkVerify'])->name('verification.verify');
         Route::get('/tai-khoan/xac-minh', [UserController::class, 'verify'])->name('verify');
         Route::post('/tai-khoan/xac-minh', [UserController::class, 'postVerify'])->name('postVerify');
+
+        Route::get('/theo-doi-don-hang', [OrderTrackingController::class, 'index'])->name('trackOrder');
 
         Route::get('/thanh-toan', [CheckoutController::class, 'index'])->name('checkout');
         Route::post('/thanh-toan', [CheckoutController::class, 'complete'])->name('checkout.complete');

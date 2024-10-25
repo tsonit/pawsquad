@@ -21,7 +21,7 @@ class CartController extends Controller
         if (Auth::check()) {
             $carts          = Cart::where('user_id', Auth::user()->id)->get();
         } else {
-            $carts          = Cart::where('guest_user_id', (int) $_COOKIE['guest_user_id'])->get();
+            $carts          = Cart::where('guest_user_id', request()->cookie('guest_user_id'))->get();
         }
         return view('clients.cart.index', ['carts' => $carts]);
     }
@@ -35,7 +35,7 @@ class CartController extends Controller
             if (Auth::check()) {
                 $cart          = Cart::where('user_id', Auth::user()->id)->where('product_variation_id', $productVariation->id)->first();
             } else {
-                $cart          = Cart::where('guest_user_id', (int) $_COOKIE['guest_user_id'])->where('product_variation_id', $productVariation->id)->first();
+                $cart          = Cart::where('guest_user_id', request()->cookie('guest_user_id'))->where('product_variation_id', $productVariation->id)->first();
             }
 
             if (is_null($cart)) {
@@ -48,7 +48,7 @@ class CartController extends Controller
                 if (Auth::check()) {
                     $cart->user_id          = Auth::user()->id;
                 } else {
-                    $cart->guest_user_id    = (int) $_COOKIE['guest_user_id'];
+                    $cart->guest_user_id    = request()->cookie('guest_user_id');
                 }
                 $message =  'Đã thêm sản phẩm vào giỏ hàng';
             } else {
@@ -208,7 +208,7 @@ class CartController extends Controller
         if (Auth::check()) {
             $carts          = Cart::where('user_id', Auth::user()->id)->get();
         } else {
-            $carts          = Cart::where('guest_user_id', (int) $_COOKIE['guest_user_id'])->get();
+            $carts          = Cart::where('guest_user_id', request()->cookie('guest_user_id'))->get();
         }
         $formattedAmount = NULL;
         if ($couponCode) {
